@@ -1,0 +1,116 @@
+<html onclick="movehero();">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <link rel="icon" href="https://i.postimg.cc/Z0xDP3R0/Screenshot-20210601-205000.jpg ">
+         <title>Dino Game</title>
+  <style>
+    #board{
+      width:345px;
+      height:200px;
+      border:1px solid black;
+      overflow:hidden;
+    }
+    .hero{
+      width:20px;
+      height:50px;
+      background:blue;
+      position:relative;
+      top:150.1px;
+      left:2px;
+    }
+  .animation{
+      animation:movehero linear 0.4s;
+    }
+    @keyframes movehero{
+    /*  0%{
+        top:150.1px;
+      }
+      50%{
+        top:130.1px;
+      }
+      100%{
+        top:150.1px;
+      }*/
+      0%{top: 130px;}
+     30%{top: 100px;}
+    70%{top: 100px;}
+    100%{top: 130px;}
+    }
+    #villain{
+      width:20px;
+      height:20px;
+      background:red;
+      position:relative;
+      left:330px;
+      top:130px;
+      animation:block 0.8s linear infinite;
+    }
+    @keyframes block{
+      0%{
+        left:500px;
+      }
+      100%{
+        left:-20px;
+      }
+    }
+    #RestartBtn{
+      width:100px;
+      height:50px;
+      background-color:lightgreen;
+      border:2px solid black;
+      opacity:0;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      position:relative;
+      top:-150px;
+    }
+  </style><script>
+  var score = 0;
+    function movehero(){
+      var x = document.getElementById("hero");
+      x.classList.add("animation");
+      setTimeout( () => {
+        x.classList.remove("animation");
+      },300)
+    /*  var pos = 150;
+      var w = setInterval(frame, 10)
+      function frame(){
+        if(pos == 125){
+          clearInterval(w)
+          score++;
+          document.getElementById("score").innerHTML = "Score:" + score;
+          setTimeout( () => {
+            x.style.top = "150";
+          }, 200)
+        } else {
+        pos -= 1;
+        x.style.top = pos + 'px';
+      }}*/
+    }
+    var GameOver = setInterval( () => {
+      let hero = document.getElementById("hero");
+      let herotop = parseInt(window.getComputedStyle(hero).getPropertyValue("top"));
+
+      let villain = document.getElementById("villain");
+      let villainleft = parseInt(window.getComputedStyle(villain).getPropertyValue("left"));
+      console.log(villainleft);
+      if(villainleft <= 20 && villainleft >= -20 && herotop >= 130){
+        alert("Game Over Your Score: " + Math.floor(score/100));
+        
+        score = 0;
+          document.getElementById("score").innerHTML = "Score:" + score;
+      } 
+      else {
+        score++;
+                  document.getElementById("score").innerHTML = "Score:" + Math.floor(score/100);
+      }
+    }, 10)
+    
+  </script>
+<div id="board">
+  <div id="hero" class="hero"></div>
+  <div id="villain"></div>
+</div>
+<center><div id="RestartBtn" onclick="Restart();"><font size="5">Restart</font></div></center>
+<center><font id="score" size="5" color="#00ccff">Score:0</font></center>
+</html>
